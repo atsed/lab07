@@ -1,4 +1,4 @@
-<фрагмент_вставки_значка>
+[![Build Status](https://travis-ci.org/desta-study/lab05.svg?branch=master)](https://travis-ci.org/desta-study/lab05)
 ## Laboratory work V
 
 Данная лабораторная работа посвещена изучению систем непрерывной интеграции на примере сервиса **Travis CI**
