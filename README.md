@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/desta-study/lab05.svg?branch=master)](https://travis-ci.org/desta-study/lab05)
+[![Build Status](https://travis-ci.org/desta-study/lab06.svg?branch=master)](https://travis-ci.org/desta-study/lab06)
 ## Laboratory work V
 
 Данная лабораторная работа посвещена изучению систем непрерывной интеграции на примере сервиса **Travis CI**
@@ -10,7 +10,7 @@ $ open https://travis-ci.org
 ## Tasks
 
 - [x] 1. Авторизоваться на сервисе **Travis CI** с использованием **GitHub** аккаунта
-- [x] 2. Создать публичный репозиторий с названием **lab05** на сервисе **GitHub**
+- [x] 2. Создать публичный репозиторий с названием **lab06** на сервисе **GitHub**
 - [x] 3. Ознакомиться со ссылками учебного материала
 - [x] 4. Включить интеграцию сервиса **Travis CI** с созданным репозиторием
 - [x] 5. Получить токен для **Travis CLI** с правами **repo** и **user**
@@ -28,17 +28,17 @@ $ export GITHUB_TOKEN=<полученный_токен>   # Устанавлив
 ### Инициализация директории lab04
 
 ```ShellSession
-$ git clone https://github.com/${GITHUB_USERNAME}/lab04 lab05
-https://github.com/${GITHUB_USERNAME}/lab04 lab05
-Клонирование в «lab05»…
+$ git clone https://github.com/${GITHUB_USERNAME}/lab04 lab06
+https://github.com/${GITHUB_USERNAME}/lab04 lab06
+Клонирование в «lab06»…
 remote: Counting objects: 29, done.
 remote: Compressing objects: 100% (21/21), done.
 remote: Total 29 (delta 7), reused 21 (delta 3), pack-reused 0
 Распаковка объектов: 100% (29/29), готово.
 Проверка соединения… готово.
-$ cd lab05
+$ cd lab06
 $ git remote remove origin
-$ git remote add origin https://github.com/${GITHUB_USERNAME}/lab05
+$ git remote add origin https://github.com/${GITHUB_USERNAME}/lab06
 ```
 ### Работа с файлом .travis.yml
 
@@ -85,7 +85,7 @@ Warnings for .travis.yml:
 ```
 
 ```ShellSession
-$ ex -sc '1i|[![Build Status](https://travis-ci.org/desta-study/lab05.svg?branch=master)](https://travis-ci.org/desta-study/lab05)' -cx README.md
+$ ex -sc '1i|[![Build Status](https://travis-ci.org/desta-study/lab06.svg?branch=master)](https://travis-ci.org/desta-study/lab06)' -cx README.md
 ```
 ### Отправляем последние изменения на GitHub сервер
 
@@ -118,16 +118,16 @@ Description: laba04
 desta-study/lab04-1 (active: no, admin: yes, push: yes, pull: yes)
 Description: Изучение систем автоматизации сборки проекта на примере CMake
 
-desta-study/lab05 (active: yes, admin: yes, push: yes, pull: yes)
+desta-study/lab06 (active: yes, admin: yes, push: yes, pull: yes)
 Description: ???
 
 desta-study/stack2 (active: no, admin: yes, push: yes, pull: yes)
 Description: Homework-2
 $ travis enable      # enables a project
-Detected repository as desta-study/lab05, is this correct? |yes| yes
-desta-study/lab05: enabled :)
+Detected repository as desta-study/lab06, is this correct? |yes| yes
+desta-study/lab06: enabled :)
 $ travis whatsup    # lists most recent builds
-desta-study/lab05 passed: #1
+desta-study/lab06 passed: #1
 $ travis branches    # most recent build for each branch
 master: #1 passed added CI
 $ travis history    # project history
@@ -137,7 +137,7 @@ Job #1.1: added CI
 State: passed
 Type: push
 Branch: master
-Compare URL: https://github.com/desta-study/lab05/compare/70611972..^...d64728e06ec8
+Compare URL: https://github.com/desta-study/lab06/compare/70611972..^...d64728e06ec8
 Duration: 36 sec
 Started: 2017-10-04 13:24:40
 Finished: 2017-10-04 13:25:16
