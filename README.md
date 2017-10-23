@@ -1,155 +1,100 @@
-[![Build Status](https://travis-ci.org/desta-study/lab006.svg?branch=master)](https://travis-ci.org/desta-study/lab006)
-## Laboratory work V
+[![Build Status](https://travis-ci.org/desta-study/lab006.svg?branch=master)](https://travis-ci.org/desta-study/lab07)
 
-Данная лабораторная работа посвещена изучению систем непрерывной интеграции на примере сервиса **Travis CI**
+## Laboratory work VII
+
+Данная лабораторная работа посвещена изучению систем документирования исходного кода на примере **Doxygen**
 
 ```ShellSession
-$ open https://travis-ci.org
+$ open https://www.stack.nl/~dimitri/doxygen/manual/index.html
 ```
 
 ## Tasks
 
-- [x] 1. Авторизоваться на сервисе **Travis CI** с использованием **GitHub** аккаунта
-- [x] 2. Создать публичный репозиторий с названием **lab06** на сервисе **GitHub**
-- [x] 3. Ознакомиться со ссылками учебного материала
-- [x] 4. Включить интеграцию сервиса **Travis CI** с созданным репозиторием
-- [x] 5. Получить токен для **Travis CLI** с правами **repo** и **user**
-- [x] 6. Получить фрагмент вставки значка сервиса **Travis CI** в формате **Markdown**
-- [x] 7. Установить [**Travis CLI**](https://github.com/travis-ci/travis.rb#installation)
-- [x] 8. Выполнить инструкцию учебного материала
-- [x] 9. Составить отчет и отправить ссылку личным сообщением в **Slack**
+- [x] 1. Создать публичный репозиторий с названием **lab07** на сервисе **GitHub**
+- [X] 2. Выполнить инструкцию учебного материала
+- [X] 3. Ознакомиться со ссылками учебного материала
+- [X] 4. Составить отчет и отправить ссылку личным сообщением в **Slack**
 
 ## Tutorial
-
+Устанавливание значение для сервиса **GitHub** и выбираем редактор  
 ```ShellSession
-$ export GITHUB_USERNAME=<имя_пользователя>  # Устанавливаем значение переменной окружения GITHUB_USERNAME
-$ export GITHUB_TOKEN=<полученный_токен>   # Устанавливаем значение переменной окружения GITHUB_TOKEN
+$ export GITHUB_USERNAME=<имя_пользователя> #Устанавливаем значение переменной окружения GITHUB_USERNAME
+$ alias edit=subl # Выбираем текстовый редактор 
 ```
-### Инициализация директории lab04
-
+Инициализация директории **lab07**
 ```ShellSession
-$ git clone https://github.com/${GITHUB_USERNAME}/lab04 lab06
-https://github.com/${GITHUB_USERNAME}/lab04 lab06
-Клонирование в «lab06»…
-remote: Counting objects: 29, done.
-remote: Compressing objects: 100% (21/21), done.
-remote: Total 29 (delta 7), reused 21 (delta 3), pack-reused 0
-Распаковка объектов: 100% (29/29), готово.
-Проверка соединения… готово.
-$ cd lab06
-$ git remote remove origin
-$ git remote add origin https://github.com/${GITHUB_USERNAME}/lab06
+$ git clone https://github.com/${GITHUB_USERNAME}/lab06 lab07
+Клонирование в «lab07»…
+$ cd lab06 # Переходим в каталог lab07
+$ git remote remove origin #Удалить старый репозиторий
+$ git remote add origin https://github.com/${GITHUB_USERNAME}/lab07 # Добавляем новый удаленный репозиторий
 ```
-### Работа с файлом .travis.yml
-
+Работа с системой документирования **Doxygen**
 ```ShellSession
-$ cat > .travis.yml <<EOF
-language: cpp
-EOF
+$ mkdir docs #Создаем каталог docs
+$ doxygen -g docs/doxygen.conf #Создаем файл doxygen.conf
+$ cat docs/doxygen.conf #Редактирование файла doxygen.conf
 ```
-
+Работаем с конфигурационным файлом doxygen.conf
 ```ShellSession
-$ cat >> .travis.yml <<EOF
-
-script:
-- cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
-- cmake --build _build
-- cmake --build _build --target install
-EOF
+#Изменение файла doxygen.conf
+$ sed -i '' 's/\(PROJECT_NAME.*=\).*$/\1 print/g' docs/doxygen.conf
+$ sed -i '' 's/\(EXAMPLE_PATH.*=\).*$/\1 examples/g' docs/doxygen.conf
+$ sed -i '' 's/\(INCLUDE_PATH.*=\).*$/\1 examples/g' docs/doxygen.conf
+$ sed -i '' 's/\(INPUT *=\).*$/\1 README.md include/g' docs/doxygen.conf
+$ sed -i '' 's/\(USE_MDFILE_AS_MAINPAGE.*=\).*$/\1 README.md/g' docs/doxygen.conf
+$ sed -i '' 's/\(OUTPUT_DIRECTORY.*=\).*$/\1 docs/g' docs/doxygen.conf
 ```
-
+Изменение файла README.md
 ```ShellSession
-$ cat >> .travis.yml <<EOF
-
-addons:
-  apt:
-    sources:
-      - george-edison55-precise-backports
-    packages:
-      - cmake
-      - cmake-data
-EOF
+$ sed -i '' 's/lab06/lab07/g' README.md
 ```
-### Заходим в аккаунт на сервисе Travis с помощью github token
-
+Документирование и редактирование print.hpp
 ```ShellSession
-$ travis login --github-token ${GITHUB_TOKEN}
-Successfully logged in as desta-study!
+# документируем функции print
+$ edit include/print.hpp
 ```
-
+Отправляем последние изменения на **GitHub** сервер
 ```ShellSession
-$ travis lint
-Warnings for .travis.yml:
-[x] value for addons section is empty, dropping
-[x] in addons section: unexpected key apt, dropping
+$ git add . # Отследить изменения всех файлов
+$ git commit -m"added doxygen.conf" # Сохранить изменения с комментарием
+$ git push origin master # Загрузка файлов на сервер
 ```
-
+Работаем с сервисом **Travis**
 ```ShellSession
-$ ex -sc '1i|[![Build Status](https://travis-ci.org/desta-study/lab06.svg?branch=master)](https://travis-ci.org/desta-study/lab06)' -cx README.md
+$ travis login --auto # Авторизация через GitHub
+$ travis enable # Включение проекта
 ```
-### Отправляем последние изменения на GitHub сервер
-
+Работа с файлом документации и отправление последни изменений на **GitHub** сервер
 ```ShellSession
-$ git add .travis.yml   # Отследить изменения .travis.yml
-$ git add README.md     # Отследить изменения README.md
-$ git commit -m"added CI"    # Сохранить изменения
-$ git push origin master     # Загрузка файлов на сервер
+$ doxygen docs/doxygen.conf # Создание конфигурационного файла документации
+$ ls | grep "[^docs]" | xargs rm -rf
+$ mv docs/html/* . && rm -rf docs # Перемещение и удаление файлов кроме файла docs
+$ git checkout -b gh-pages #Перемещаемся на ветку gh-pages,где хранится документация html
+#Добавляем все отредактированные файлы в подтвержденные
+$ git add . # Отследить изменения всех файлов
+$ git commit -m"added documentation" # Сохранить изменения с комментарием
+$ git push origin gh-pages
+$ git checkout master  #Перемещаемся на ветку master
 ```
-
+Делаем Screenshot терминала и загружаем на сервис **Google Drive**
 ```ShellSession
-$ travis lint     # display warnings for a .travis.yml
-Warnings for .travis.yml:
-[x] value for addons section is empty, dropping
-[x] in addons section: unexpected key apt, dropping
-$ travis accounts   # displays accounts and their subscription status
-desta-study (desta-study): subscribed, 6 repositories
-$ travis sync    # triggers a new sync with GitHub
-synchronizing: .. done
-$ travis repos     # list of my repos
-desta-study/lab03 (active: no, admin: yes, push: yes, pull: yes)
-Description: ???
-
-desta-study/lab03-1 (active: no, admin: yes, push: yes, pull: yes)
-Description: ???
-
-desta-study/lab04 (active: no, admin: yes, push: yes, pull: yes)
-Description: laba04
-
-desta-study/lab04-1 (active: no, admin: yes, push: yes, pull: yes)
-Description: Изучение систем автоматизации сборки проекта на примере CMake
-
-desta-study/lab06 (active: yes, admin: yes, push: yes, pull: yes)
-Description: ???
-
-desta-study/stack2 (active: no, admin: yes, push: yes, pull: yes)
-Description: Homework-2
-$ travis enable      # enables a project
-Detected repository as desta-study/lab06, is this correct? |yes| yes
-desta-study/lab06: enabled :)
-$ travis whatsup    # lists most recent builds
-desta-study/lab06 passed: #1
-$ travis branches    # most recent build for each branch
-master: #1 passed added CI
-$ travis history    # project history
-travi#1 passed: master added CI
-$ travis show   # displays a build 
-Job #1.1: added CI
-State: passed
-Type: push
-Branch: master
-Compare URL: https://github.com/desta-study/lab06/compare/70611972..^...d64728e06ec8
-Duration: 36 sec
-Started: 2017-10-04 13:24:40
-Finished: 2017-10-04 13:25:16
-Allow Failure: false
-Config: os: linux
+$ mkdir artifacts && cd artifacts #Создаем каталог artifacts и перемещаемся в него
+$ screencapture -T 10 screenshot.jpg #Делаем снимок экрана и помещаем его в каталог artifacts
+<Command>-T
+$ open https://${GITHUB_USERNAME}.github.io/lab07/print_8hpp_source.html #Открываем ссылку
+$ gdrive upload screenshot.jpg #Загружаем скриншот
+$ SCREENSHOT_ID=`gdrive list | grep screenshot | awk '{ print $1; }'` # Задаем значения переменной SCREENSHOT_ID
+$ gdrive share ${SCREENSHOT_ID} --role reader --type user --email rusdevops@gmail.com # Даем права на просмотр для пользователя rusdevops@gmail.com
+$ echo https://drive.google.com/open?id=${SCREENSHOT_ID} #Выводим ссылку на наше изображение
+https://drive.google.com/file/d/0B9y67drIuGqSZEJ5MjRWNUJnSUk/view
 ```
 
 ## Report
 
 ```ShellSession
 $ cd ~/workspace/labs/
-$ export LAB_NUMBER=05
+$ export LAB_NUMBER=07
 $ git clone https://github.com/tp-labs/lab${LAB_NUMBER} tasks/lab${LAB_NUMBER}
 $ mkdir reports/lab${LAB_NUMBER}
 $ cp tasks/lab${LAB_NUMBER}/README.md reports/lab${LAB_NUMBER}/REPORT.md
@@ -160,11 +105,11 @@ $ gistup -m "lab${LAB_NUMBER}"
 
 ## Links
 
-- [Travis Client](https://github.com/travis-ci/travis.rb)
-- [AppVeyour](https://www.appveyor.com/)
-- [GitLab CI](https://about.gitlab.com/gitlab-ci/)
+- [HTML](https://ru.wikipedia.org/wiki/HTML)
+- [LAΤΕΧ](https://ru.wikipedia.org/wiki/LaTeX)
+- [man](https://ru.wikipedia.org/wiki/Man_(%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0_Unix))
+- [CHM](https://ru.wikipedia.org/wiki/HTMLHelp)
+- [PostScript](https://ru.wikipedia.org/wiki/PostScript)
 
 ```
 Copyright (c) 2017 Братья Вершинины
-```
-
