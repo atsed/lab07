@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/desta-study/lab006.svg?branch=master)](https://travis-ci.org/desta-study/lab07)
+[![Build Status](https://travis-ci.org/desta-study/lab07.svg?branch=master)](https://travis-ci.org/desta-study/lab07)
 
 ## Laboratory work VII
 
